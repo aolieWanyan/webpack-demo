@@ -1,0 +1,9 @@
+body {
+  background: url('../asserts/bg.jpg') no-repeat;
+  background-size: 100%;
+}
+
+#app {
+  font-size: 50px;
+  color: greenyellow;
+}

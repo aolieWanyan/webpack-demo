@@ -4,13 +4,13 @@ const CleanWebpackPlugin = require('clean-webpack-plugin')
 const webpack = require('webpack')
 
 module.exports = {
-  mode: 'development',
   entry: {
     app: './src/main.js'
   },
   output: {
     path: path.resolve(__dirname, './dist'),
-    filename: './js/[name].bundle.js'
+    publicPath: './',
+    filename: 'static/js/[name].[hash].js'
   },
   devServer: {
     contentBase: path.resolve(__dirname, './dist'),
@@ -18,9 +18,24 @@ module.exports = {
     port: 8089,
     hot: true
   },
+  module: {
+    rules: [
+      { test: /\.css$/, loader: ['style-loader', 'css-loader'] },
+      {
+        test: /\.(png|jpg|jpeg|gif)$/,
+        use: {
+          loader: 'url-loader',
+          options: {
+            limit: 10000,
+            name: './static/img/[name].[hash:7].[ext]'
+          }
+        }
+      }
+    ]
+  },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new CleanWebpackPlugin(),
+    new CleanWebpackPlugin(['dist']),
     new HtmlWebpackPlugin({
       template: './index.html',
       title: 'webpack-demo'
