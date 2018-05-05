@@ -2,6 +2,7 @@ const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const webpack = require('webpack')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 module.exports = {
   entry: {
@@ -20,14 +21,22 @@ module.exports = {
   },
   module: {
     rules: [
-      { test: /\.css$/, loader: ['style-loader', 'css-loader'] },
+      {
+        test: /\.css$/,
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: 'css-loader',
+          publicPath: '../../'
+        })
+      },
       {
         test: /\.(png|jpg|jpeg|gif)$/,
         use: {
           loader: 'url-loader',
           options: {
             limit: 10000,
-            name: './static/img/[name].[hash:7].[ext]'
+            outputPath: 'static/img',
+            name: '[name].[hash:7].[ext]'
           }
         }
       }
@@ -39,6 +48,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './index.html',
       title: 'webpack-demo'
-    })
+    }),
+    new ExtractTextPlugin('static/css/style.css')
   ]
 }
