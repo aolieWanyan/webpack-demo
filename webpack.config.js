@@ -10,11 +10,11 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, './dist'),
-    publicPath: './',
+    publicPath: '/',
     filename: 'static/js/[name].[hash].js'
   },
   devServer: {
-    contentBase: path.resolve(__dirname, './dist'),
+    // contentBase: path.resolve(__dirname, './dist'),
     host: 'localhost',
     port: 8089,
     hot: true
@@ -25,7 +25,10 @@ module.exports = {
         test: /\.css$/,
         use: ExtractTextPlugin.extract({
           fallback: 'style-loader',
-          use: 'css-loader',
+          use: [
+            { loader: 'css-loader' },
+            { loader: 'postcss-loader' }
+          ],
           publicPath: '../../'
         })
       },
@@ -47,7 +50,6 @@ module.exports = {
     new CleanWebpackPlugin(['dist']),
     new HtmlWebpackPlugin({
       template: './index.html',
-      filename: 'index.html',
       title: 'webpack-demo',
     }),
     new ExtractTextPlugin('static/css/style.css')

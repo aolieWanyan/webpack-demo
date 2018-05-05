@@ -6,4 +6,5 @@ body {
 #app {
   font-size: 50px;
   color: greenyellow;
+  transform: rotate(45deg);
 }
