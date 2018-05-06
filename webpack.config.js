@@ -5,6 +5,7 @@ const webpack = require('webpack')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const PurifyCssWebpack = require('purifycss-webpack')
 const glob = require('glob')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 module.exports = {
   entry: {
@@ -12,7 +13,8 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, './dist'),
-    publicPath: '/',
+    // publicPath: '/', // development
+    publicPath: './', // production
     filename: 'static/js/[name].[hash].js'
   },
   devServer: {
@@ -74,6 +76,9 @@ module.exports = {
     new ExtractTextPlugin('static/css/style.css'),
     new PurifyCssWebpack({
       paths: glob.sync(path.join(__dirname, './index.html')),
-    })
+    }),
+    new CopyWebpackPlugin([
+      { from: path.resolve(__dirname, 'static'), to: 'static', ignore: '.*' }
+    ])
   ]
 }
