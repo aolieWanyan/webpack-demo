@@ -3,6 +3,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const webpack = require('webpack')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const PurifyCssWebpack = require('purifycss-webpack')
+const glob = require('glob')
 
 module.exports = {
   entry: {
@@ -33,6 +35,18 @@ module.exports = {
         })
       },
       {
+        test: /\.less$/,
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [
+            { loader: 'css-loader' },
+            { loader: 'less-loader' },
+            { loader: 'postcss-loader' }
+          ],
+          publicPath: '../../'
+        })
+      },
+      {
         test: /\.(png|jpg|jpeg|gif)$/,
         use: {
           loader: 'url-loader',
@@ -52,6 +66,9 @@ module.exports = {
       template: './index.html',
       title: 'webpack-demo',
     }),
-    new ExtractTextPlugin('static/css/style.css')
+    new ExtractTextPlugin('static/css/style.css'),
+    new PurifyCssWebpack({
+      paths: glob.sync(path.join(__dirname, './index.html')),
+    })
   ]
 }
