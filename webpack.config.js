@@ -13,8 +13,8 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, './dist'),
-    // publicPath: '/', // development
-    publicPath: './', // production
+    publicPath: '/', // development
+    // publicPath: './', // production
     filename: 'static/js/[name].[hash].js'
   },
   devServer: {
