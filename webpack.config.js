@@ -13,8 +13,8 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, './dist'),
-    publicPath: '/', // development
-    // publicPath: './', // production
+    // publicPath: '/', // development
+    publicPath: './', // production
     filename: 'static/js/[name].[hash].js'
   },
   devServer: {
@@ -80,8 +80,8 @@ module.exports = {
     new CopyWebpackPlugin([
       { from: path.resolve(__dirname, 'static'), to: 'static', ignore: '.*' }
     ]),
-    new webpack.ProvidePlugin({
-      $: 'jquery'
-    })
+    // new webpack.ProvidePlugin({
+    //   $: 'jquery'
+    // })
   ]
 }
