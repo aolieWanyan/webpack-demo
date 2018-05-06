@@ -56,6 +56,11 @@ module.exports = {
             name: '[name].[hash:7].[ext]'
           }
         }
+      },
+      {
+        test: /\.js$/,
+        loader: 'babel-loader',
+        exclude: /node_modules/
       }
     ]
   },
