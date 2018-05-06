@@ -79,6 +79,9 @@ module.exports = {
     }),
     new CopyWebpackPlugin([
       { from: path.resolve(__dirname, 'static'), to: 'static', ignore: '.*' }
-    ])
+    ]),
+    new webpack.ProvidePlugin({
+      $: 'jquery'
+    })
   ]
 }
